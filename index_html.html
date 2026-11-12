@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Kerajaan Matematika</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:inherit}
+html,body{min-height:100%;margin:0}
+body{font-family:'Baloo 2','Trebuchet MS',sans-serif;color:#4a2c0f;background:linear-gradient(#7ccdf5 0,#c5ecff 30%,#8fdc6b 30%,#4fb54a 100%) fixed;overflow-x:hidden}
+.wood{background:linear-gradient(180deg,#a86a35,#7a4519 60%,#6a3a14);border:4px solid #ffd23f;border-radius:22px;box-shadow:0 8px 0 #4a2708,0 14px 22px rgba(0,0,0,.35),inset 0 3px 0 rgba(255,255,255,.25);color:#fff7d6}
+.scroll{background:linear-gradient(#fff3cf,#f5deaa);border:3px solid #c98f3e;border-radius:18px;box-shadow:0 5px 0 #a8742a,0 8px 14px rgba(0,0,0,.25);color:#4b2a7a}
+.gold{background:linear-gradient(#ffe46b,#f9b81a 55%,#e69a05);border:3px solid #fff3a8;border-radius:999px;box-shadow:0 6px 0 #a96a00,0 12px 18px rgba(0,0,0,.3),inset 0 3px 6px rgba(255,255,255,.7);color:#5a2d00;font-weight:800;padding:10px 26px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.gold:hover{transform:translateY(-2px) scale(1.04)}
+.gold:active{transform:translateY(5px);box-shadow:0 1px 0 #a96a00}
+.gold:disabled{filter:grayscale(1);opacity:.6;cursor:not-allowed}
+.brown{background:linear-gradient(#a86a35,#6a3a14);border:3px solid #e8b45a;color:#fff7d6;border-radius:999px;padding:6px 18px;font-weight:700;box-shadow:0 4px 0 #3c1f08;cursor:pointer}
+.crown{font-size:3rem;filter:drop-shadow(0 0 10px #ffd23f);animation:glow 2s infinite alternate}
+@keyframes glow{to{filter:drop-shadow(0 0 22px #fff06a);transform:scale(1.1)}}
+@keyframes flo{50%{transform:translateY(-12px)}}
+@keyframes bnc{0%,100%{transform:translateY(0)}40%{transform:translateY(-18px)}60%{transform:translateY(0)}70%{transform:translateY(-6px)}}
+@keyframes shk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes pop{from{transform:scale(.5);opacity:0}}
+.flo{animation:flo 3s ease-in-out infinite}.bnc{animation:bnc 1.6s infinite}.shk{animation:shk .35s}.pop{animation:pop .3s}
+.inp{width:100%;padding:10px 14px;border-radius:14px;border:3px solid #c98f3e;background:#fffbea;color:#4a2c0f;font:inherit;font-weight:700;font-size:1.1rem}
+.opt{font-size:1.9rem;font-weight:800;padding:14px;border-radius:18px;background:linear-gradient(#fff,#ffeaa8);border:4px solid #e8b45a;box-shadow:0 5px 0 #b57d1c;cursor:pointer;color:#4a2c0f;transition:transform .1s}
+.opt:hover:not(:disabled){transform:scale(1.05)}
+.opt.ok{background:linear-gradient(#b8f7a0,#53c93b);border-color:#2b8a1c}
+.opt.no{background:linear-gradient(#ffb3b3,#f05151);border-color:#a82020;opacity:.7}
+.opt:disabled{cursor:default}
+.bt{display:inline-block;width:14px;height:54px;margin:2px;border-radius:4px;background:linear-gradient(#ff7b7b,#c0392b);box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+.bo{display:inline-block;width:14px;height:14px;margin:2px;border-radius:4px;background:linear-gradient(#6cb2ff,#2563eb)}
+.node{position:absolute;transform:translate(-50%,-50%);text-align:center;width:140px;cursor:pointer}
+.node .em{font-size:3.4rem;filter:drop-shadow(0 6px 4px rgba(0,0,0,.35))}
+.hidden{display:none!important}
+#pop{position:fixed;inset:0;background:rgba(30,10,60,.6);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
+.cert{background:#fffbe8;border:10px double #d9a31c;border-radius:12px;color:#4b2a7a;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+@media print{body *{visibility:hidden}.cert,.cert *{visibility:visible}.cert{position:absolute;left:0;top:0;width:100%}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+body{color:#eaf2ff;background:radial-gradient(circle at 20% 0,#3b2a8f,#0b0f2e 65%) fixed}
+.wood{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04));backdrop-filter:blur(14px);border:2px solid #67e8f9;box-shadow:0 0 22px rgba(103,232,249,.45),inset 0 0 18px rgba(255,255,255,.08);color:#fff}
+.scroll{background:rgba(24,18,70,.62);backdrop-filter:blur(12px);border:2px solid #c084fc;box-shadow:0 0 20px rgba(192,132,252,.4);color:#eaf2ff}
+.bg-white\/70,.bg-white\/60,.bg-green-200,.bg-red-200{color:#2b1b6b}
+.node .em{display:block;transition:transform .2s}.node:hover .em{transform:scale(1.15) rotate(-4deg)}
+#map polyline{stroke:#67e8f9;filter:drop-shadow(0 0 5px #22d3ee)}
+.av{transition:transform .15s}.av:hover{transform:scale(1.15)}
+</style>
+</head>
+<body>
+<div id="hud" class="hidden sticky top-0 z-40 p-2">
+ <div class="wood flex flex-wrap items-center justify-between gap-2 px-4 py-2 !rounded-2xl">
+  <div class="font-extrabold">🛡️ <span id="hN"></span> <span class="text-sm font-bold opacity-90">· Kelas <span id="hC"></span> · <span id="hS"></span></span></div>
+  <div class="flex items-center gap-3 font-extrabold">🪙 <span id="hCoin">0</span> 💎 <span id="hCry">0</span>/5
+   <button class="brown" onclick="home()">🏠</button><button class="brown" onclick="libOpen()">📚</button><button class="brown" id="mb" onclick="toggleMute()">🔊</button></div>
+ </div>
+</div>
+
+<main class="max-w-5xl mx-auto p-3">
+<!-- INTRO -->
+<section id="s-intro" class="scr text-center pt-6">
+ <div class="flo crown">👑</div>
+ <div class="wood inline-block px-8 py-5 mt-1"><h1 class="text-4xl md:text-6xl font-extrabold leading-tight" style="color:#ffe46b;text-shadow:0 4px 0 #4a2708">Petualangan<br>Kerajaan Matematika</h1>
+  <div class="scroll mt-3 px-4 py-1 font-bold">Penjumlahan dan Pengurangan Sampai 100</div></div>
+ <div class="text-6xl mt-3 flex justify-center gap-6"><span class="bnc">🤴</span><span class="bnc" style="animation-delay:.4s">👸</span></div>
+ <div class="scroll max-w-md mx-auto p-5 mt-3 text-left">
+  <p class="font-extrabold text-xl mb-2 text-center">Siapa namamu, Pahlawan?</p>
+  <div class='font-bold text-center'>Pilih Avatar Pahlawan</div><div class='flex justify-center gap-3 mb-3'><button class='av text-4xl rounded-full w-14 h-14 bg-white/20' data-a='🤴' onclick="pickAv('🤴')">🤴</button><button class='av text-4xl rounded-full w-14 h-14 bg-white/20' data-a='👸' onclick="pickAv('👸')">👸</button><button class='av text-4xl rounded-full w-14 h-14 bg-white/20' data-a='🧙' onclick="pickAv('🧙')">🧙</button><button class='av text-4xl rounded-full w-14 h-14 bg-white/20' data-a='🦸' onclick="pickAv('🦸')">🦸</button></div><label class="font-bold">Nama Pahlawan</label><input id="iN" class="inp mb-2" placeholder="Contoh: Budi" maxlength="24">
+  <label class="font-bold">Kelas</label><input id="iC" class="inp mb-2" value="2" maxlength="6">
+  <label class="font-bold">Nama Sekolah</label><input id="iS" class="inp mb-4" placeholder="Contoh: SDN 1 Surakarta" maxlength="40">
+  <div class="text-center"><button class="gold text-2xl" onclick="start()">Mulai Petualangan ▶</button></div>
+  <p class="text-center mt-3 text-sm font-bold">Kumpulkan 5 kristal dengan menyelesaikan tantangan matematika! 💎</p>
+ </div>
+</section>
+
+<!-- MAP -->
+<section id="s-map" class="scr hidden">
+ <div class="text-center"><div class="crown">👑</div>
+ <div class="wood inline-block px-8 py-3 -mt-2"><h2 class="text-3xl font-extrabold" style="color:#ffe46b">Peta Kerajaan Aritmatika</h2><div class="text-sm font-bold">Pilih wilayah yang akan kamu jelajahi! ⭐</div></div></div>
+ <div id="map" class="relative mt-3 rounded-3xl overflow-hidden border-4 border-yellow-300" style="height:600px;background:radial-gradient(circle at 85% 8%,#fff6a8 0 5%,transparent 6%),linear-gradient(#8fd8ff 0,#d4f3ff 25%,#7fd35c 25%,#4cae45 100%);box-shadow:0 8px 0 #2d7a28">
+  <div class="absolute flo text-5xl" style="left:8%;top:3%">☁️</div><div class="absolute flo text-6xl" style="left:55%;top:5%;animation-delay:1s">☁️</div>
+  <div class="absolute" style="left:-5%;top:60%;width:110%;height:50px;background:#4cb8ff;border-radius:50%;transform:rotate(-8deg);opacity:.85"></div>
+  <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="22,24 72,22 74,50 26,52 50,80" fill="none" stroke="#fff0b0" stroke-width="5" stroke-dasharray="1 9" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke-width:6"/></svg>
+  <div id="nodes"></div>
+ </div>
+ <div class="flex flex-wrap justify-center gap-3 mt-4">
+  <button class="gold" onclick="showGoal()">🎯 Tujuan Pembelajaran</button>
+  <button class="gold" onclick="libOpen()">📚 Perpustakaan Materi</button><button class="gold" onclick="go('hub')">🎮 Arena Permainan &amp; Versus</button><button class="gold" onclick="showGuide()">📖 Panduan Bermain</button>
+  <button class="gold" id="certBtn" onclick="endScr()" disabled>🏆 Sertifikat</button>
+ </div>
+</section>
+
+<!-- REGION -->
+<section id="s-reg" class="scr hidden text-center pt-6">
+ <div class="crown">👑</div><div class="wood inline-block px-8 py-4 -mt-2"><h2 id="rT" class="text-3xl font-extrabold" style="color:#ffe46b"></h2></div>
+ <div id="rE" class="text-8xl my-3 flo"></div>
+ <div class="scroll max-w-md mx-auto p-4 font-bold" id="rD"></div>
+ <div class="flex flex-col items-center gap-4 mt-5" id="rB"></div>
+ <button class="brown mt-6" onclick="go('map')">← Kembali ke Peta</button>
+</section>
+
+<!-- LEARN -->
+<section id="s-learn" class="scr hidden">
+ <div class="wood px-6 py-3 text-center mt-4"><h2 id="lT" class="text-2xl font-extrabold" style="color:#ffe46b"></h2></div>
+ <div class="scroll p-5 mt-4 text-center">
+  <div id="lV" class="min-h-[160px] flex flex-wrap items-center justify-center gap-3"></div>
+  <div id="lX" class="text-xl font-bold mt-3 min-h-[3rem]"></div>
+  <div id="lCtl" class="mt-3"></div>
+ </div>
+ <div class="text-center mt-4 flex justify-center gap-3 flex-wrap"><button class='brown' onclick='go(LF)'>← Kembali</button><button class='gold' onclick='startQuiz(cur)'>⚔️ Main Kuis</button></div>
+</section>
+
+<!-- QUIZ -->
+<section id="s-quiz" class="scr hidden">
+ <div class="wood flex flex-wrap justify-between items-center px-5 py-2 mt-4 gap-2">
+  <div class="text-2xl" id="qH"></div><div class="font-extrabold" id="qP"></div><div class="font-extrabold text-xl">🪙 <span id="qS">0</span></div></div>
+ <div class="scroll p-5 mt-4 text-center">
+  <div id="qV" class="min-h-[40px] mb-2"></div>
+  <div id="qQ" class="text-3xl font-extrabold mb-4"></div>
+  <div id="qO" class="grid grid-cols-2 gap-4 max-w-lg mx-auto"></div>
+  <div id="qF" class="mt-4 font-extrabold text-xl min-h-[2rem]"></div>
+ </div>
+ <div class="flex justify-center gap-3 mt-4 flex-wrap">
+  <button class="gold" id="bW" onclick="wiz()">🧙 Bantuan Penyihir (<span id="nW">2</span>)</button>
+  <button class="gold" id="bK" onclick="shield()">🛡️ Perisai Raja (<span id="nK">1</span>)</button>
+  <button class="brown" onclick="go('reg')">Keluar</button></div>
+</section>
+
+<!-- VERSUS -->
+<section id="s-vs" class="scr hidden">
+ <div class="wood px-6 py-3 text-center mt-4"><h2 class="text-2xl font-extrabold" style="color:#ffe46b">⚔️ Adu Cepat Istana Kristal</h2><div id="vR" class="font-bold"></div></div>
+ <div class='max-w-xl mx-auto mt-3'><div class='relative h-9 rounded-full overflow-hidden border-2 border-yellow-300 bg-slate-900 flex' style='box-shadow:0 0 18px #fde047'><div id='vBar0' class='h-full transition-all duration-500' style='width:50%;background:linear-gradient(90deg,#22d3ee,#2563eb)'></div><div id='vBar1' class='h-full transition-all duration-500' style='width:50%;background:linear-gradient(270deg,#f472b6,#dc2626)'></div><div class='absolute inset-0 flex items-center justify-center text-sm font-extrabold text-white'>⚔️ TARIK TAMBANG KRISTAL ⚔️</div></div><div class='h-2 mt-1 rounded bg-white/20'><div id='vTm' class='h-2 rounded bg-yellow-300' style='width:100%'></div></div></div>
+ <div class="scroll p-4 mt-3 text-center text-3xl font-extrabold" id="vQ"></div>
+ <div class="grid md:grid-cols-2 gap-3 mt-3">
+  <div class="rounded-3xl p-3 border-4 border-blue-600" style="background:linear-gradient(#cfe4ff,#7fb2ff)"><div class="text-center font-extrabold text-xl text-blue-900">🔵 Kesatria Biru: <span id="v0">0</span> ⚔️ <span id="c0"></span></div><div class="grid grid-cols-2 gap-3 mt-2" id="p0"></div></div>
+  <div class="rounded-3xl p-3 border-4 border-red-600" style="background:linear-gradient(#ffd0d0,#ff8c8c)"><div class="text-center font-extrabold text-xl text-red-900">🔴 Kesatria Merah: <span id="v1">0</span> ⚔️ <span id="c1"></span></div><div class="grid grid-cols-2 gap-3 mt-2" id="p1"></div></div>
+ </div>
+ <div id="vF" class="text-center font-extrabold text-2xl mt-3 min-h-[2.5rem]"></div>
+ <div class='text-center mt-2'><button class='brown' onclick="vsStop();go('hub')">← Keluar ke Arena</button></div>
+</section>
+
+<section id='s-hub' class='scr hidden text-center pt-4'><div class='crown'>👑</div><div class='wood inline-block px-8 py-3 -mt-2'><h2 class='text-3xl font-extrabold' style='color:#ffe46b'>🎮 Arena Permainan Kerajaan</h2><div class='text-sm font-bold'>Pilih mode tantangan yang ingin kamu mainkan!</div></div>
+<div class='grid md:grid-cols-3 gap-4 mt-6 max-w-4xl mx-auto'>
+<div class='scroll p-5 flex flex-col justify-between'><div class='text-6xl flo mb-2'>⚔️</div><h3 class='text-2xl font-extrabold'>Duel Versus 2 Pemain</h3><p class='font-bold text-sm my-2'>1 layar, 2 kesatria! Tarik tambang poin, combo 🔥, ronde kristal ×2, dan KO!</p><button class='gold mt-3' onclick='startVs()'>Adu Cepat ▶</button></div>
+<div class='scroll p-5 flex flex-col justify-between'><div class='text-6xl flo mb-2'>🎴</div><h3 class='text-2xl font-extrabold'>Kartu Memori</h3><p class='font-bold text-sm my-2'>Pasangkan soal dengan jawaban yang pas!</p><button class='gold mt-3' onclick='startMemory()'>Pasang Kartu ▶</button></div>
+<div class='scroll p-5 flex flex-col justify-between'><div class='text-6xl flo mb-2'>⚡</div><h3 class='text-2xl font-extrabold'>Balapan Kilat 30 Detik</h3><p class='font-bold text-sm my-2'>Jawab sebanyak mungkin soal sebelum waktu habis!</p><button class='gold mt-3' onclick='startRace()'>Mulai Balapan ▶</button></div></div>
+<div class='mt-6'><button class='brown' onclick="go('map')">← Kembali ke Peta</button></div></section>
+<section id='s-mem' class='scr hidden'><div class='wood px-6 py-3 text-center mt-4'><h2 class='text-2xl font-extrabold' style='color:#ffe46b'>🎴 Kartu Memori Matematika</h2><div class='font-bold'>Semua kartu terbuka! Ketuk 1 soal 🟨, lalu ketuk jawabannya 🟩</div></div>
+<div class='scroll p-3 mt-3 flex justify-between items-center font-extrabold max-w-2xl mx-auto'><div>Cocok: <span id='memMatch' class='text-2xl'>0</span>/4</div><div>Percobaan: <span id='memTries' class='text-2xl'>0</span></div></div>
+<div id='memGrid' class='grid grid-cols-2 gap-3 max-w-xl mx-auto mt-4'></div><div id='memF' class='text-center font-extrabold text-xl mt-3 min-h-[2rem]'></div>
+<div class='text-center mt-4'><button class='gold' onclick='startMemory()'>🎲 Kartu Baru</button> <button class='brown' onclick="go('hub')">← Keluar</button></div></section>
+<section id='s-race' class='scr hidden'><div class='wood px-6 py-3 text-center mt-4'><h2 class='text-2xl font-extrabold' style='color:#ffe46b'>⚡ Balapan Kilat 30 Detik</h2><div class='font-bold'>Setiap jawaban benar +10 🪙. Salah? Coba lagi cepat!</div></div>
+<div class='scroll p-3 mt-3 flex justify-around font-extrabold max-w-xl mx-auto text-2xl'><div>⏱️ <span id='raceTime'>30</span>s</div><div>🪙 <span id='raceScore'>0</span></div></div>
+<div class='scroll p-6 mt-4 text-center max-w-xl mx-auto'><div id='raceQ' class='text-4xl font-extrabold mb-6'></div><div id='raceO' class='grid grid-cols-2 gap-4'></div></div>
+<div class='text-center mt-4'><button class='brown' onclick="stopRace();go('hub')">← Keluar</button></div></section>
+<section id='s-lib' class='scr hidden'><div class='wood px-6 py-3 text-center mt-4'><h2 class='text-3xl font-extrabold' style='color:#fde047'>📚 Perpustakaan Materi</h2><div class='font-bold'>Belajar kapan saja, tanpa perlu main kuis dulu!</div></div><div id='libG' class='grid md:grid-cols-2 gap-4 mt-4'></div><div class='text-center mt-4'><button class='brown' onclick="go('map')">← Kembali ke Peta</button></div></section>
+<!-- END -->
+<section id="s-end" class="scr hidden text-center pt-4">
+ <div class="cert p-6 max-w-2xl mx-auto">
+  <div class="crown">👑</div>
+  <h2 class="text-3xl font-extrabold">Sertifikat Pahlawan Matematika</h2>
+  <p class="mt-2 font-bold">Dengan bangga diberikan kepada</p>
+  <div id="eN" class="text-5xl font-extrabold my-2" style="color:#c2410c"></div>
+  <p class="font-bold">Kelas <span id="eC"></span> · <span id="eS"></span></p>
+  <p class="mt-2 font-bold">atas keberhasilan menaklukkan Kerajaan Aritmatika dan mengumpulkan semua kristal ajaib.</p>
+  <div class="grid grid-cols-3 gap-2 mt-4 text-center font-extrabold">
+   <div class="scroll p-2">💎<div id="eK" class="text-2xl"></div>Kristal</div>
+   <div class="scroll p-2">🪙<div id="eP" class="text-2xl"></div>Total Skor</div>
+   <div class="scroll p-2">⏱️<div id="eT" class="text-2xl"></div>Waktu</div></div>
+  <div id="eM" class="mt-3 font-bold"></div>
+ </div>
+ <div class="flex gap-3 justify-center mt-4 flex-wrap"><button class="gold" onclick="window.print()">🖨️ Cetak</button><button class="gold" onclick="go('map')">🗺️ Kembali ke Peta</button></div>
+</section>
+</main>
+<div id="pop" class="hidden"><div id="popB" class="scroll p-6 max-w-md w-full text-center pop"></div></div>
+
+<script>
+const $=id=>document.getElementById(id),r=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),sh=a=>a.sort(()=>Math.random()-.5);
+const S={name:'',cls:'',school:'',unlocked:1,cry:new Set(),score:0,t0:0};
+let cur=1,Q={},V={};
+/* ---------- AUDIO ---------- */
+let AC,muted=false,bg=null,st=0;
+function ac(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume()}
+function tone(f,d,ty='square',v=.08,dl=0){if(!AC||muted)return;const t=AC.currentTime+dl,o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d)}
+const sfx={click:()=>tone(660,.07,'square',.06),good:()=>{tone(988,.15,'sine',.18);tone(1319,.35,'sine',.18,.1)},
+ bad:()=>{if(!AC||muted)return;const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type='sawtooth';o.frequency.setValueAtTime(380,t);o.frequency.exponentialRampToValueAtTime(110,t+.4);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.5)},
+ win:()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,.3,'triangle',.15,i*.13))};
+const mel=[523,659,784,659,587,698,880,698,523,659,784,1047,988,784,659,587],bass=[131,131,175,196];
+function bgm(){if(bg)return;bg=setInterval(()=>{tone(mel[st%16],.22,'triangle',.05);if(st%4==0)tone(bass[(st>>2)%4],.5,'sine',.07);st++},250)}
+function toggleMute(){muted=!muted;$('mb').textContent=muted?'🔇':'🔊'}
+document.addEventListener('click',e=>{if(e.target.closest('button')){ac();sfx.click()}});
+/* ---------- NAV ---------- */
+function go(id){document.querySelectorAll('.scr').forEach(e=>e.classList.add('hidden'));$('s-'+id).classList.remove('hidden');$('hud').classList.toggle('hidden',id=='intro');if(id=='map')drawMap();hud();scrollTo(0,0)}
+function home(){go('map')}
+function hud(){$('hN').textContent=S.name;$('hC').textContent=S.cls;$('hS').textContent=S.school;$('hCoin').textContent=S.score;$('hCry').textContent=S.cry.size}
+function pop(h){$('popB').innerHTML=h+'<div class="mt-4"><button class="gold" onclick="closePop()">Siap!</button></div>';$('pop').classList.remove('hidden')}
+function closePop(){$('pop').classList.add('hidden')}
+function start(){S.name=$('iN').value.trim()||'Pahlawan';S.cls=$('iC').value.trim()||'2';S.school=$('iS').value.trim()||'SD Kerajaan';S.t0=Date.now();ac();bgm();go('map');pop('<div class="text-5xl">🤴👸</div><h3 class="text-2xl font-extrabold">Halo, '+S.name+'!</h3><p class="font-bold">Raja membutuhkan bantuanmu. Kumpulkan 5 kristal dengan menyelesaikan tantangan matematika!</p>')}
+function showGoal(){pop('<h3 class="text-2xl font-extrabold">🎯 Tujuan Pembelajaran</h3><ul class="text-left font-bold mt-2 list-disc pl-6"><li>Memahami puluhan dan satuan</li><li>Menjumlahkan dengan menyimpan sampai 100</li><li>Mengurangkan dengan meminjam sampai 100</li><li>Memakai trik hitung cepat</li><li>Menyelesaikan soal cerita</li></ul>')}
+function showGuide(){pop('<h3 class="text-2xl font-extrabold">📖 Panduan Bermain</h3><ul class="text-left font-bold mt-2 list-disc pl-6"><li>Buka wilayah, klik Pelajari Materi dulu.</li><li>Di kuis kamu punya 3 ❤️. Jawaban benar dapat 🪙.</li><li>🧙 Penyihir menyingkirkan 2 jawaban salah.</li><li>🛡️ Perisai menjaga hatimu sekali.</li><li>Selesaikan kuis untuk mendapat 💎 dan membuka wilayah baru.</li></ul>')}
+/* ---------- MAP ---------- */
+const R=[
+ {n:'Hutan Angka',e:'🌳',x:22,y:24,d:'Belajar puluhan dan satuan memakai balok. Kuis Level 1.'},
+ {n:'Jembatan Penjumlahan',e:'🌉',x:72,y:22,d:'Penjumlahan menyimpan: satuan penuh jadi satu puluhan. Kuis Level 2.'},
+ {n:'Gua Pengurangan',e:'⛰️',x:74,y:50,d:'Pengurangan meminjam: pinjam satu puluhan untuk satuan. Kuis Level 3.'},
+ {n:'Menara Penyihir',e:'🔮',x:26,y:52,d:'Trik hitung kilat dengan sihir visual. Kuis Level 4.'},
+ {n:'Istana Kristal',e:'🏰',x:50,y:80,d:'Tantangan soal cerita dan duel 2 pemain di satu layar.'}];
+function drawMap(){$('nodes').innerHTML=R.map((g,i)=>{const lv=i+1,open=lv<=S.unlocked,done=S.cry.has(lv);
+ return `<div class="node" style="left:${g.x}%;top:${g.y}%" onclick="openReg(${lv})"><div class="wood !border-2 !rounded-xl px-2 py-1 text-sm font-extrabold leading-tight">${lv}. ${g.n}</div><div class="em ${open&&!done?'bnc':''}">${done?'💎':g.e}</div><button class="${open?'gold':'brown'} !text-sm !py-1 !px-4">${done?'✔ Selesai':open?'Jelajahi':'🔒 Terkunci'}</button></div>`}).join('');
+ $('certBtn').disabled=S.cry.size<5}
+function openReg(lv){if(lv>S.unlocked){sfx.bad();pop('<div class="text-5xl">🔒</div><p class="font-extrabold text-xl">Wilayah ini masih terkunci.</p><p class="font-bold">Selesaikan wilayah sebelumnya dulu ya!</p>');return}
+ cur=lv;const g=R[lv-1];$('rT').textContent=lv+'. '+g.n;$('rE').textContent=g.e;$('rD').textContent=g.d;
+ $('rB').innerHTML=`<button class="gold text-xl" onclick="learn(${lv})">📖 Pelajari Materi</button><button class="gold text-xl" onclick="startQuiz(${lv})">⚔️ Mulai Kuis</button>`+(lv==5?`<button class="gold text-xl" onclick="startVs()">🛡️ Game Versus 2 Pemain</button>`:'');go('reg')}
+/* ---------- MATERI ---------- */
+const bl=n=>'<span class="bt"></span>'.repeat(Math.floor(n/10))+'<span class="bo"></span>'.repeat(n%10);
+const DEM={
+ 2:{t:'Menjumlah dengan Menyimpan: 27 + 18',s:[
+  ['<div><b>27</b><br>'+bl(27)+'</div><b class="text-3xl">+</b><div><b>18</b><br>'+bl(18)+'</div>','Puluhan 🟥 dan satuan 🟦. Jumlahkan satuan dulu!'],
+  ['<div>'+'<span class="bo"></span>'.repeat(15)+'</div>','Satuan: 7 + 8 = 15. Itu 1 puluhan dan 5 satuan. Simpan 1 puluhan!'],
+  ['<div>'+bl(40)+'</div>','Puluhan: 2 + 1 + 1 (simpanan) = 4 puluhan = 40.'],
+  ['<div>'+bl(45)+'</div>','40 + 5 = <b>45</b>. Hebat! 🎉']]},
+ 3:{t:'Mengurangi dengan Meminjam: 42 − 17',s:[
+  ['<div><b>42</b><br>'+bl(42)+'</div>','Satuan 2 tidak cukup dikurangi 7. Kita pinjam!'],
+  ['<div>'+bl(30)+'<span class="bo"></span>'.repeat(12)+'</div>','Pinjam 1 puluhan jadi 10 satuan. Sekarang 3 puluhan dan 12 satuan.'],
+  ['<div>'+bl(30)+'<span class="bo"></span>'.repeat(5)+'</div>','Satuan: 12 − 7 = 5.'],
+  ['<div>'+bl(25)+'</div>','Puluhan: 3 − 1 = 2. Hasilnya <b>25</b>! 🎉']]},
+ 4:{t:'Trik Kilat Penyihir: 38 + 9',s:[
+  ['<div class="text-6xl">🧙</div><div class="text-3xl font-extrabold">38 + 9</div>','Menambah 9 itu sulit. Menambah 10 jauh lebih mudah!'],
+  ['<div class="text-3xl font-extrabold">38 + 10 = 48</div>','Langkah 1: tambah 10 dulu. Puluhan naik satu.'],
+  ['<div class="text-3xl font-extrabold">48 − 1 = 47</div>','Langkah 2: tadi kelebihan 1, jadi kurangi 1.'],
+  ['<div class="text-3xl font-extrabold">✨ 38 + 9 = 47 ✨</div>','Trik yang sama: 54 − 9 = 54 − 10 + 1 = 45.']]},
+ 5:{t:'Soal Cerita: Ani punya 35 apel, dapat 28 lagi',s:[
+  ['<div class="text-3xl">🍎 35 &nbsp; 🍎 28</div>','Langkah 1: baca soal dan temukan angkanya.'],
+  ['<div class="text-3xl">"dapat lagi" = ➕</div>','Langkah 2: pilih operasi. Kata "dapat lagi" artinya ditambah.'],
+  ['<div class="text-3xl">35 + 28 = ?</div>','Langkah 3: satuan 5 + 8 = 13, simpan 1. Puluhan 3 + 2 + 1 = 6.'],
+  ['<div class="text-3xl">Jawab: 63 apel 🍎</div>','Langkah 4: tulis jawaban dengan satuannya.']]}};
+function learn(lv){cur=lv;go('learn');const c=$('lCtl');
+ if(lv==1){$('lT').textContent='Puluhan dan Satuan';$('lX').innerHTML='';c.innerHTML='<input type="range" min="0" max="99" value="46" id="sl" class="w-64" oninput="sl1(this.value)"><div class="font-bold mt-1">Geser untuk mengubah angka</div>';sl1(46);return}
+ const d=DEM[lv];$('lT').textContent=d.t;let i=0;
+ const show=()=>{$('lV').innerHTML=d.s[i][0];$('lX').innerHTML=d.s[i][1];$('lV').firstElementChild&&$('lV').classList.add('pop');setTimeout(()=>$('lV').classList.remove('pop'),300);
+  c.innerHTML=i<d.s.length-1?'<button class="gold" id="nx">Langkah berikutnya ▶</button>':'<button class="gold" id="nx">🔁 Ulangi</button>';$('nx').onclick=()=>{i=i<d.s.length-1?i+1:0;show()}};show()}
+function sl1(v){v=+v;$('lV').innerHTML=`<div class="text-6xl font-extrabold w-full"><span style="color:#c0392b">${Math.floor(v/10)}</span><span style="color:#2563eb">${v%10}</span></div><div>${bl(v)||'—'}</div>`;
+ $('lX').innerHTML=`<b style="color:#c0392b">${Math.floor(v/10)} puluhan</b> + <b style="color:#2563eb">${v%10} satuan</b> = <b>${v}</b>`}
+/* ---------- SOAL ---------- */
+function G(lv){let a,b,q,ans,vis='',tip='';
+ if(lv==1){const t=r(1,9),o=r(0,9),n=t*10+o,k=r(0,2);vis=bl(n);
+  if(k==0){q=`${t} puluhan dan ${o} satuan = ?`;ans=n;vis=''}else if(k==1){q=`Angka ${n} punya berapa puluhan?`;ans=t}else{q=`Angka ${n} punya berapa satuan?`;ans=o}}
+ else if(lv==2){do{a=r(11,79);b=r(11,89)}while(a%10+b%10<10||a+b>100);q=`${a} + ${b} = ?`;ans=a+b;tip='Jumlahkan satuan dulu, simpan puluhan.'}
+ else if(lv==3){do{a=r(31,99);b=r(11,a-10)}while(a%10>=b%10);q=`${a} − ${b} = ?`;ans=a-b;tip='Pinjam 1 puluhan untuk satuan.'}
+ else if(lv==4){const k=r(0,3);a=r(12,80);if(k==0){q=`${a} + 9 = ?`;ans=a+9;tip=`${a}+10 = ${a+10}, lalu kurang 1.`}else if(k==1){q=`${a} + 8 = ?`;ans=a+8;tip=`${a}+10 = ${a+10}, lalu kurang 2.`}else if(k==2){q=`${a+10} − 9 = ?`;ans=a+1;tip=`${a+10}−10 = ${a}, lalu tambah 1.`}else{q=`${a} + 11 = ?`;ans=a+11;tip=`Tambah 10, lalu tambah 1.`}}
+ else{const N=['Ani','Budi','Citra','Dimas'][r(0,3)],I=['apel 🍎','kelereng 🔮','stiker ⭐','permen 🍬'][r(0,3)],k=r(0,1);
+  if(k==0){a=r(23,58);b=r(15,40);if(a+b>100)b=100-a-1;q=`${N} punya ${a} ${I}. Lalu dapat ${b} lagi. Berapa jumlah semuanya?`;ans=a+b;tip='Kata dapat lagi artinya ditambah.'}
+  else{a=r(50,95);b=r(12,a-10);q=`${N} punya ${a} ${I}. ${N} memberikan ${b} kepada temannya. Berapa sisanya?`;ans=a-b;tip='Kata memberikan artinya dikurangi.'}}
+ const s=new Set([ans]);let c=[1,-1,10,-10,2,-2,11,-11,3,-3,5];sh(c);for(const d of c){if(s.size>=4)break;if(ans+d>=0&&ans+d<=100)s.add(ans+d)}
+ return{q,ans,vis,tip,o:sh([...s])}}
+/* ---------- KUIS ---------- */
+const TOT=6;
+function startQuiz(lv){cur=lv;Q={lv,n:0,h:3,sc:0,hw:2,hs:1,sOn:false,lock:false};go('quiz');nextQ()}
+function nextQ(){if(Q.n>=TOT)return endQuiz(true);Q.n++;Q.c=G(Q.lv);Q.lock=false;Q.sOn=false;
+ $('qH').textContent='❤️'.repeat(Q.h)+'🖤'.repeat(3-Q.h);$('qP').textContent=`Soal ${Q.n} dari ${TOT}`;$('qS').textContent=Q.sc;$('nW').textContent=Q.hw;$('nK').textContent=Q.hs;
+ $('bW').disabled=Q.hw<1;$('bK').disabled=Q.hs<1;$('qV').innerHTML=Q.c.vis;$('qQ').textContent=Q.c.q;$('qF').textContent='';
+ $('qO').innerHTML=Q.c.o.map(v=>`<button class="opt" data-v="${v}" onclick="ans(this)">${v}</button>`).join('')}
+function ans(b){if(Q.lock)return;const v=+b.dataset.v;
+ if(v==Q.c.ans){Q.lock=true;b.classList.add('ok');sfx.good();Q.sc+=10;S.score+=10;hud();$('qS').textContent=Q.sc;$('qF').innerHTML='🎉 Selamat! Jawabanmu benar! +10 🪙';setTimeout(nextQ,1100)}
+ else{b.classList.add('no','shk');b.disabled=true;sfx.bad();
+  if(Q.sOn){Q.sOn=false;$('qF').innerHTML='🛡️ Perisai melindungimu! Coba lagi.'}
+  else{Q.h--;$('qH').textContent='❤️'.repeat(Q.h)+'🖤'.repeat(3-Q.h);$('qF').innerHTML='💭 Coba lagi ya! <span class="text-base">Petunjuk: '+Q.c.tip+'</span>';if(Q.h<=0){Q.lock=true;setTimeout(()=>endQuiz(false),900)}}}}
+function wiz(){if(Q.hw<1||Q.lock)return;Q.hw--;$('nW').textContent=Q.hw;$('bW').disabled=Q.hw<1;let n=0;document.querySelectorAll('#qO .opt').forEach(b=>{if(+b.dataset.v!=Q.c.ans&&!b.disabled&&n<2){b.disabled=true;b.classList.add('no');n++}});sfx.good();$('qF').textContent='🧙 Penyihir menyingkirkan jawaban salah!'}
+function shield(){if(Q.hs<1||Q.lock)return;Q.hs--;Q.sOn=true;$('nK').textContent=Q.hs;$('bK').disabled=true;sfx.good();$('qF').textContent='🛡️ Perisai Raja aktif untuk satu kesalahan!'}
+function endQuiz(win){if(win){S.cry.add(Q.lv);S.unlocked=Math.max(S.unlocked,Math.min(5,Q.lv+1));sfx.win();hud();
+  const all=S.cry.size>=5;pop(`<div class="text-6xl bnc">💎</div><h3 class="text-2xl font-extrabold">Kristal ${Q.lv} didapat!</h3><p class="font-bold">Skor kuis: ${Q.sc} 🪙 · Sisa nyawa: ${'❤️'.repeat(Q.h)}</p><p class="font-bold">${all?'Semua kristal terkumpul! Ambil sertifikatmu!':Q.lv<5?'Wilayah berikutnya terbuka!':'Coba juga Game Versus!'}</p>`);go(all?'end':'map');if(all)fillEnd()}
+ else{pop('<div class="text-6xl">😢</div><h3 class="text-2xl font-extrabold">Nyawamu habis</h3><p class="font-bold">Jangan menyerah! Pelajari materinya lalu coba lagi.</p>');go('reg')}}
+/* ---------- VERSUS ---------- */
+function startVs(){V={r:0,sc:[0,0],lk:[0,0],open:false};go('vs');$('v0').textContent=0;$('v1').textContent=0;$('c0').textContent='';$('c1').textContent='';vsNext()}
+function vsNext(){if(V.r>=5)return vsEnd();V.r++;V.c=G([2,3,4,5,4][V.r-1]);V.lk=[0,0];V.open=true;$('vR').textContent=`Ronde ${V.r} dari 5`;$('vQ').textContent=V.c.q;$('vF').textContent='Siapa cepat dan benar, dia menyerang! ⚡';
+ [0,1].forEach(p=>$('p'+p).innerHTML=V.c.o.map(v=>`<button class="opt" onclick="vsA(${p},${v},this)">${v}</button>`).join(''))}
+function vsA(p,v,b){if(!V.open||V.lk[p])return;
+ if(v==V.c.ans){V.open=false;V.sc[p]++;b.classList.add('ok');$('v'+p).textContent=V.sc[p];sfx.good();$('vF').innerHTML=(p?'🔴 Kesatria Merah':'🔵 Kesatria Biru')+' menyerang! ⚔️ +1';setTimeout(vsNext,1300)}
+ else{V.lk[p]=1;b.classList.add('no');sfx.bad();document.querySelectorAll('#p'+p+' .opt').forEach(x=>x.disabled=true);
+  if(V.lk[0]&&V.lk[1]){V.open=false;$('vF').textContent='Dua-duanya salah! Jawaban: '+V.c.ans;setTimeout(vsNext,1500)}else $('vF').textContent=(p?'Merah':'Biru')+' salah dan terkunci di ronde ini!'}}
+function vsEnd(){sfx.win();const[a,b]=V.sc,w=a>b?0:b>a?1:-1;if(w>=0)$('c'+w).textContent='👑';S.score+=30;hud();
+ pop(`<div class="text-6xl bnc">${w<0?'🤝':'👑'}</div><h3 class="text-2xl font-extrabold">${w<0?'Seri! Kalian sama hebat!':(w?'Kesatria Merah':'Kesatria Biru')+' menang!'}</h3><p class="font-bold">Biru ${a} : ${b} Merah · Bonus +30 🪙</p>`);go('reg')}
+/* ---------- PENUTUP ---------- */
+function fillEnd(){const s=Math.floor((Date.now()-S.t0)/1000);$('eN').textContent=S.name;$('eC').textContent=S.cls;$('eS').textContent=S.school;$('eK').textContent=S.cry.size+'/5';$('eP').textContent=S.score;$('eT').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+ $('eM').textContent=S.cry.size>=5?'Capaian misi: SEMUA wilayah berhasil ditaklukkan! 🌟🌟🌟':'Capaian misi: '+S.cry.size+' dari 5 kristal'}
+function endScr(){go('end');fillEnd()}
+/* ===== MATERI LENGKAP + KALKULATOR AJAIB ===== */
+const LT=['Hutan Angka: Puluhan dan Satuan','Jembatan Penjumlahan: Menyimpan','Gua Pengurangan: Meminjam','Menara Penyihir: Trik Kilat','Istana Kristal: Soal Cerita'];
+let LI=0,LSX=[],CT={},CS={},TC;
+const D=(t,o)=>`<span style="color:#c0392b">${t}</span><span style="color:#2563eb">${o}</span>`;
+const tenTo=()=>'<div class="my-2">'+'<span class="bo"></span>'.repeat(10)+' <b class="text-2xl">=</b> <span class="bt"></span></div>';
+function learn(lv){cur=lv;LI=0;LSX=SL(lv);$('lT').textContent=LT[lv-1];go('learn');renderL()}
+function renderL(){const s=LSX[LI];$('lV').innerHTML=`<div class="w-full max-w-2xl mx-auto"><div class="flex justify-center gap-2 flex-wrap mb-3">${LSX.map((x,i)=>`<button class="brown !px-3 !py-0 ${i==LI?'!bg-none !bg-yellow-400 !text-amber-900':''}" onclick="LI=${i};renderL()">${i+1}. ${x.t}</button>`).join('')}</div><h3 class="text-2xl font-extrabold mb-2">${s.h}</h3><div class="pop">${s.b()}</div></div>`;$('lX').innerHTML='';$('lCtl').innerHTML=`<button class="brown" ${LI?'':'disabled'} onclick="LI--;renderL()">◀ Sebelumnya</button> <button class="gold !py-1" ${LI<LSX.length-1?'':'disabled'} onclick="LI++;renderL()">Lanjut ▶</button>`;s.i&&s.i()}
+/* kalkulator balok */
+function counter(k,g){CT[k]={t:0,o:0,g};const b=(l,a,c)=>`<button class="gold !py-1 !px-3 !text-base" onclick="ct('${k}',${a},${c})">${l}</button>`;return `<div class="rounded-2xl p-3 bg-white/60 border-2 border-amber-400"><div id="${k}d" class="text-6xl font-extrabold"></div><div id="${k}b" class="my-2 min-h-[70px]"></div><div id="${k}m" class="font-bold min-h-[1.5rem]"></div><div class="flex flex-wrap justify-center gap-2 mt-2">${b('+1 puluhan 🟥',1,0)}${b('−1 puluhan',-1,0)}${b('+1 satuan 🟦',0,1)}${b('−1 satuan',0,-1)}</div></div>`}
+function ct(k,dt,d){const c=CT[k];let m='';c.t+=dt;c.o+=d;if(c.o>=10){c.o-=10;c.t++;m='✨ Ting! 10 satuan ditukar jadi 1 puluhan!'}if(c.o<0){if(c.t>0){c.o+=10;c.t--;m='Memecah 1 puluhan jadi 10 satuan'}else c.o=0}c.t=Math.max(0,Math.min(9,c.t));paintCt(k,m)}
+function paintCt(k,m){const c=CT[k],n=c.t*10+c.o;$(k+'d').innerHTML=D(c.t,c.o);$(k+'b').innerHTML=bl(n)||'—';$(k+'m').textContent=m||`${c.t} puluhan + ${c.o} satuan = ${n}`;if(m)sfx.good()}
+function chkT(){const c=CT.b,n=c.t*10+c.o;if(n==c.g){sfx.good();$('tg').innerHTML='🎉 Tepat sekali! Angkanya '+c.g+'!'}else{sfx.bad();$('tg').textContent='Belum pas. Angkamu sekarang '+n+'. Coba lagi!'}}
+function sl2(v){v=+v;$('dm').innerHTML=`<div class="text-6xl font-extrabold">${D(Math.floor(v/10),v%10)}</div><div>${bl(v)||'—'}</div><b>${Math.floor(v/10)} puluhan + ${v%10} satuan = ${v}</b>`}
+/* tantangan kilat */
+function chal(){TC=G(cur);return `<div class="text-center"><div>${TC.vis}</div><div class="text-2xl font-extrabold my-2">${TC.q}</div><div class="grid grid-cols-2 gap-3 max-w-sm mx-auto">${TC.o.map(v=>`<button class="opt" onclick="tc(this,${v})">${v}</button>`).join('')}</div><div id="tf" class="font-extrabold text-xl mt-2 min-h-[2rem]"></div><button class="brown mt-2" onclick="renderL()">🎲 Soal baru</button></div>`}
+function tc(b,v){if(v==TC.ans){b.classList.add('ok');sfx.good();$('tf').textContent='🎉 Benar! Kamu hebat!'}else{b.classList.add('no','shk');b.disabled=true;sfx.bad();$('tf').textContent='Coba lagi! '+TC.tip}}
+/* kalkulator langkah (tambah/kurang) */
+function colcalc(op){const d=op=='+'?[27,18]:[42,17],i=(id,v)=>`<input id="${id}" type="number" min="0" max="99" value="${v}" class="inp !w-24 text-center">`;return `<div class="flex flex-wrap items-center justify-center gap-2 font-extrabold text-2xl">${i('ca',d[0])} ${op} ${i('cb',d[1])} <button class="gold !py-1" onclick="cStart('${op}')">Hitung ▶</button> <button class="brown" onclick="cRand('${op}')">🎲 Acak</button></div><div id="co" class="mt-3"></div>`}
+function cRand(op){let a,b;if(op=='+'){do{a=r(11,79);b=r(11,89)}while(a%10+b%10<10||a+b>100)}else{do{a=r(31,99);b=r(11,a-10)}while(a%10>=b%10)}$('ca').value=a;$('cb').value=b;cStart(op)}
+function cStart(op){const a=+$('ca').value,b=+$('cb').value;if(isNaN(a)||isNaN(b)||a<0||b<0||a>99||b>99||(op=='+'&&a+b>100)||(op=='−'&&a<b)){sfx.bad();$('co').innerHTML='<b>Pilih angka 0 sampai 99. Hasilnya harus 0 sampai 100'+(op=='−'?' dan angka pertama harus lebih besar':'')+'.</b>';return}
+ const at=Math.floor(a/10),ao=a%10,bt=Math.floor(b/10),bo=b%10,add=op=='+';let cr,ro,rt,t2,t3;
+ if(add){const so=ao+bo;cr=so>=10?1:0;ro=so%10;rt=at+bt+cr;t2=`Jumlahkan <b class="text-blue-600">satuan</b> dulu: ${ao} + ${bo} = ${so}. `+(cr?`Itu 10 atau lebih! Tukar 10 satuan jadi <b>1 puluhan</b> dan simpan. Tulis ${ro}.`:`Kurang dari 10, tidak perlu menyimpan. Tulis ${ro}.`);t3=`Sekarang <b class="text-red-600">puluhan</b>: ${at} + ${bt}${cr?' + 1 (simpanan)':''} = ${rt}.`}
+ else{cr=bo>ao?1:0;ro=ao+10*cr-bo;rt=at-cr-bt;t2=cr?`Satuan ${ao} kurang dari ${bo}. <b>Pinjam</b> 1 puluhan 🟥 jadi 10 satuan: ${ao} + 10 = ${ao+10}. Lalu ${ao+10} − ${bo} = ${ro}.`:`Kurangi <b class="text-blue-600">satuan</b>: ${ao} − ${bo} = ${ro}. Tidak perlu meminjam.`;t3=`Sekarang <b class="text-red-600">puluhan</b>: ${at}${cr?' − 1 (dipinjam)':''} − ${bt} = ${rt}.`}
+ CS={op,a,b,at,ao,bt,bo,cr,ro,rt,i:0,T:['Tulis sejajar: puluhan 🟥 di atas puluhan, satuan 🟦 di atas satuan. Mulai dari satuan!',t2,t3,`Selesai! ${a} ${op} ${b} = <b>${a+(add?b:-b)}</b> 🎉`]};cShow()}
+function cShow(){const c=CS,i=c.i,add=c.op=='+',R1=i>=1?c.ro:'?',R2=i>=2?(c.rt+(i>=2?'':'')):'?',mk=i>=1&&c.cr?(add?`<span class="text-orange-600">simpan 1 ➜ ¹</span>`:`<span class="text-orange-600">pinjam: puluhan ${c.at}→${c.at-1}</span>`):'&nbsp;';
+ $('co').innerHTML=`<div class="grid md:grid-cols-2 gap-3 items-center"><div class="inline-block mx-auto text-right text-4xl font-extrabold leading-tight" style="font-family:ui-monospace,monospace;min-width:150px"><div class="text-sm h-5">${mk}</div><div>${D(c.at||'&nbsp;',c.ao)}</div><div>${c.op}${D(c.bt||'&nbsp;',c.bo)}</div><div style="border-top:4px solid #4a2c0f">${D(R2,R1)}</div></div><div><div class="bg-white/70 rounded-2xl p-3 font-bold text-lg pop">${c.T[i]}</div><div class="mt-2">${i==3?bl(c.a+(add?c.b:-c.b)):''}</div></div></div><button class="gold !py-1 mt-3" onclick="CS.i=CS.i<3?CS.i+1:0;cShow()">${i<3?'Langkah berikutnya ▶':'🔁 Ulangi'}</button>`}
+/* kalkulator trik penyihir */
+const TR={'+9':[10,-1,'9 hampir 10. 9 = 10 − 1'],'+8':[10,-2,'8 hampir 10. 8 = 10 − 2'],'+11':[10,1,'11 = 10 + 1'],'−9':[-10,1,'9 = 10 − 1, jadi kurangi 10 lalu tambah 1'],'−8':[-10,2,'8 = 10 − 2, jadi kurangi 10 lalu tambah 2']};
+function trickUI(){return `<div class="font-bold">Angka awal: <input id="tn" type="number" min="0" max="99" value="38" class="inp !w-24 text-center inline-block"></div><div class="flex flex-wrap justify-center gap-2 my-3">${Object.keys(TR).map(k=>`<button class="gold !py-1 !px-4" onclick="tRun('${k}')">🧙 ${k}</button>`).join('')}</div><div id="to"></div>`}
+function tRun(k){const n=+$('tn').value,[x,y,w]=TR[k],m=n+x,f=m+y;if(isNaN(n)||n<0||m<0||m>100||f<0||f>100){sfx.bad();$('to').innerHTML='<b>Pilih angka lain supaya hasilnya 0 sampai 100.</b>';return}
+ const ch=(v,c,dl)=>`<span class="pop inline-block rounded-2xl px-4 py-2 text-4xl font-extrabold text-white" style="background:${c};animation-delay:${dl}s;animation-fill-mode:backwards">${v}</span>`,ar=(l,dl)=>`<span class="pop inline-block font-bold mx-1" style="animation-delay:${dl}s;animation-fill-mode:backwards">➜<br><small>${l}</small></span>`;
+ const s1=(x>0?'tambah ':'kurang ')+Math.abs(x),s2=(y>0?'tambah ':'kurang ')+Math.abs(y);sfx.good();
+ $('to').innerHTML=`<div class="flex flex-wrap items-center justify-center">${ch(n,'#2563eb',0)}${ar(s1,.3)}${ch(m,'#a855f7',.6)}${ar(s2,.9)}${ch(f,'#16a34a',1.2)}</div><div class="font-bold text-lg mt-3">✨ ${n} ${k[0]} ${k.slice(1)} = <b>${f}</b>. Rahasianya: ${w}.</div>`}
+/* kalkulator soal cerita */
+function storyUI(){return `<div class="grid grid-cols-2 gap-2 max-w-md mx-auto font-bold text-left"><label>Nama<select id="sn" class="inp"><option>Ani</option><option>Budi</option><option>Citra</option><option>Dimas</option></select></label><label>Benda<select id="si" class="inp"><option>apel 🍎</option><option>permen 🍬</option><option>stiker ⭐</option><option>kelereng 🔮</option></select></label><label>Punya<input id="sa" type="number" value="35" min="0" max="99" class="inp"></label><label>Kejadian<select id="so" class="inp"><option value="+">➕ dapat lagi</option><option value="-">➖ diberikan</option></select></label><label>Jumlahnya<input id="sb" type="number" value="28" min="0" max="99" class="inp"></label><button class="gold self-end" onclick="stRun()">Buat cerita ▶</button></div><div id="sr" class="mt-3"></div>`}
+function stRun(){const n=$('sn').value,it=$('si').value,a=+$('sa').value,b=+$('sb').value,o=$('so').value,res=o=='+'?a+b:a-b;if(isNaN(a)||isNaN(b)||res<0||res>100){sfx.bad();$('sr').innerHTML='<b>Pilih angka yang hasilnya 0 sampai 100.</b>';return}sfx.good();
+ $('sr').innerHTML=`<div class="bg-white/70 rounded-2xl p-3 font-bold text-lg pop"><p>${n} punya ${a} ${it}. ${o=='+'?'Lalu '+n+' dapat '+b+' lagi.':'Lalu '+b+' diberikan kepada teman.'} Berapa ${o=='+'?'semuanya':'sisanya'}?</p><p class="text-2xl mt-2">Operasi: ${a} ${o=='+'?'+':'−'} ${b} = <b>${res}</b></p><p>Jawab: ${res} ${it.split(' ')[0]}</p><div>${bl(res)}</div></div>`}
+/* ===== VERSI 2.0 ===== */
+let LF='reg';
+const L0=learn;learn=function(lv,f){LF=f||'reg';L0(lv)};
+hud=function(){$('hN').textContent=(S.av||'🤴')+' '+S.name;$('hC').textContent=S.cls;$('hS').textContent=S.school;$('hCoin').textContent=S.score;$('hCry').textContent=S.cry.size};
+function pickAv(a){S.av=a;document.querySelectorAll('.av').forEach(b=>b.style.boxShadow=b.dataset.a==a?'0 0 0 4px #fde047,0 0 22px #22d3ee':'none');sfx.magic()}
+sfx.magic=()=>[784,988,1175,1568].forEach((f,i)=>tone(f,.25,'sine',.12,i*.07));
+sfx.shield=()=>{tone(220,.3,'triangle',.15);tone(330,.4,'triangle',.15,.1)};
+const W0=wiz,K0=shield;wiz=function(){W0();sfx.magic()};shield=function(){K0();sfx.shield()};
+const F0=fillEnd;fillEnd=function(){F0();$('eM').innerHTML+="<div class='inline-block mt-3 border-4 border-red-700 text-red-700 rounded-full px-4 py-2 font-extrabold' style='transform:rotate(-8deg)'>👑 Stempel Kerajaan Aritmatika</div>"};
+function libOpen(){go('lib');$('libG').innerHTML=R.map((g,i)=>`<div class='scroll p-4 text-center'><div class='text-6xl flo'>${g.e}</div><h3 class='text-xl font-extrabold'>${i+1}. ${g.n}</h3><p class='font-bold text-sm my-2'>${g.d}</p><p class='text-sm'>${SL(i+1).length} slide: misi, contoh, kalkulator, tantangan, rangkuman</p><button class='gold mt-2' onclick="learn(${i+1},'lib')">📖 Baca Materi</button></div>`).join('')}
+(function(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=document.createElement('canvas');c.style.cssText='position:fixed;inset:0;z-index:-1;width:100%;height:100%';document.body.prepend(c);const x=c.getContext('2d');let w,h,P=[],m={x:-999,y:-999};const rs=()=>{w=c.width=innerWidth;h=c.height=innerHeight};rs();addEventListener('resize',rs);addEventListener('pointermove',e=>{m.x=e.clientX;m.y=e.clientY});for(let i=0;i<90;i++)P.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,s:Math.random()*.4+.1,c:['#67e8f9','#c084fc','#fde047','#6ee7b7'][i%4]});(function f(){x.clearRect(0,0,w,h);P.forEach(p=>{p.y-=p.s;if(p.y<0){p.y=h;p.x=Math.random()*w}const dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy)||1;if(d<100){p.x+=dx/d*2;p.y+=dy/d*2}x.globalAlpha=.5+.5*Math.sin(Date.now()/500+p.x);x.fillStyle=p.c;x.shadowBlur=8;x.shadowColor=p.c;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});requestAnimationFrame(f)})()})();
+/* materi sistematis: Misi > Kenali > Contoh > Kalkulator > Awas > Tantangan > Rangkuman */
+const X=[
+{g:['Mengenal puluhan 🟥 dan satuan 🟦','Membaca dan menulis angka sampai 100','Membandingkan dua angka'],v:[['Puluhan','Kelompok isi 10. Satu batang 🟥 = 10.'],['Satuan','Benda yang masih sendiri. Satu kotak 🟦 = 1.'],['Nilai tempat','Letak angka menentukan nilainya. Angka kiri = puluhan, angka kanan = satuan.']],
+ ex:[['Contoh 1: Angka 53',bl(53)+'<br>5 puluhan + 3 satuan = 50 + 3 = 53'],['Contoh 2: Angka 100',bl(100)+'<br>10 puluhan = 100'],['Contoh 3: Membandingkan 64 dan 59','Bandingkan <b>puluhan</b> dulu: 6 lebih besar dari 5, jadi 64 &gt; 59. Kalau puluhannya sama, bandingkan satuannya.'],['Contoh 4: Bentuk panjang','47 = 40 + 7. Empat puluhan dan tujuh satuan.']],
+ er:['Angka 30 artinya 3 puluhan dan 0 satuan, bukan 3 satuan.','Pada angka 52, angka 5 bernilai 50, bukan 5.','Cara mengecek: hitung balok 🟥 kali 10, lalu tambah balok 🟦.'],
+ sm:['10 satuan = 1 puluhan.','Angka kiri = puluhan, angka kanan = satuan.','Bandingkan puluhan dulu, baru satuan.']},
+{g:['Menjumlahkan sampai 100','Menyimpan saat satuan 10 atau lebih','Mengecek jawaban dengan pengurangan'],v:[['Menjumlah','Menggabungkan dua banyak. Tandanya +.'],['Menyimpan','Menukar 10 satuan jadi 1 puluhan, lalu memindahkannya ke kolom puluhan.'],['Hasil jumlah','Jawaban dari penjumlahan.']],
+ ex:[['Contoh 1: 23 + 14 (tanpa menyimpan)','Satuan: 3 + 4 = 7. Puluhan: 2 + 1 = 3. Hasilnya 37.'],['Contoh 2: 27 + 18 (menyimpan)','Satuan: 7 + 8 = 15, tulis 5 simpan 1. Puluhan: 2 + 1 + 1 = 4. Hasilnya 45.<br>'+bl(45)],['Contoh 3: 48 + 36','8 + 6 = 14, tulis 4 simpan 1. 4 + 3 + 1 = 8. Hasilnya 84.'],['Contoh 4: 65 + 35','5 + 5 = 10, tulis 0 simpan 1. 6 + 3 + 1 = 10 puluhan. Hasilnya 100.']],
+ er:['Jangan lupa menambah simpanan di puluhan.','Tulis satuan di bawah satuan, puluhan di bawah puluhan.','Cek dengan kebalikannya: 45 − 18 = 27 ✔.'],
+ sm:['Jumlahkan satuan dulu.','Satuan 10 atau lebih? Tulis satuannya, simpan 1 puluhan.','Jumlahkan puluhan ditambah simpanan.','Cek dengan pengurangan.']},
+{g:['Mengurangkan sampai 100','Meminjam 1 puluhan saat satuan kurang','Mengecek jawaban dengan penjumlahan'],v:[['Mengurang','Mengambil sebagian dari banyaknya. Tandanya −.'],['Meminjam','Memecah 1 puluhan 🟥 jadi 10 satuan 🟦.'],['Selisih','Jawaban dari pengurangan.']],
+ ex:[['Contoh 1: 58 − 23 (tanpa meminjam)','8 − 3 = 5. 5 − 2 = 3. Hasilnya 35.'],['Contoh 2: 42 − 17','2 kurang dari 7. Pinjam: 12 − 7 = 5. Puluhan 4 − 1 = 3, lalu 3 − 1 = 2. Hasilnya 25.<br>'+bl(25)],['Contoh 3: 71 − 38','1 kurang dari 8. Pinjam: 11 − 8 = 3. Puluhan 7 − 1 = 6, lalu 6 − 3 = 3. Hasilnya 33.'],['Contoh 4: 90 − 46','0 kurang dari 6. Pinjam: 10 − 6 = 4. 9 − 1 = 8, lalu 8 − 4 = 4. Hasilnya 44.']],
+ er:['Selalu angka atas dikurangi angka bawah. Jangan dibalik jadi 7 − 2.','Setelah meminjam, puluhan atas berkurang 1.','Cek dengan menjumlah: 25 + 17 = 42 ✔.'],
+ sm:['Satuan atas lebih kecil? Pinjam 1 puluhan.','Satuan atas ditambah 10, lalu dikurangi.','Puluhan atas berkurang 1, lalu dikurangi.','Cek dengan penjumlahan.']},
+{g:['Menambah 9, 8, dan 11 dengan cepat','Mengurangi 9 dan 8 dengan cepat','Memakai bilangan kembar dan pasangan 10'],v:[['Trik','Cara pintas yang tetap benar.'],['Pasangan 10','Dua angka yang jumlahnya 10: 1+9, 2+8, 3+7, 4+6, 5+5.'],['Kembar','Dua angka yang sama dijumlahkan, misalnya 7 + 7 atau 25 + 25.']],
+ ex:[['Contoh 1: 38 + 9','38 + 10 = 48, lalu kurang 1 → 47.'],['Contoh 2: 54 − 9','54 − 10 = 44, lalu tambah 1 → 45.'],['Contoh 3: 25 + 26 (kembar dekat)','25 + 25 = 50, lalu tambah 1 → 51.'],['Contoh 4: 47 + 6 (menggenapkan)','47 + 3 = 50. Sisa 6 − 3 = 3. Jadi 50 + 3 = 53.']],
+ er:['Setelah tambah 10 untuk +9, jangan lupa kurang 1 kembali.','Untuk +8, kurangnya 2, bukan 1.','Cek memakai cara susun ke bawah.'],
+ sm:['+9 = tambah 10 lalu kurang 1.','−9 = kurang 10 lalu tambah 1.','Kembar dekat: jumlah kembar lalu ± 1.','Menggenapkan ke puluhan penuh memudahkan hitungan.']},
+{g:['Membaca soal cerita dengan teliti','Memilih tambah atau kurang dari kata kunci','Menulis kalimat matematika dan jawaban'],v:[['Kata kunci ➕','dapat lagi, ditambah, bergabung, semuanya.'],['Kata kunci ➖','diberikan, dimakan, hilang, sisanya.'],['Kalimat matematika','Cerita ditulis jadi angka, contoh 35 + 28 = ?']],
+ ex:[['Soal 1','Ani punya 35 apel. Ibu memberi 28 apel lagi. Berapa semuanya? Kata kunci "lagi" dan "semuanya" = ➕. 35 + 28 = 63. Jawab: 63 apel.'],['Soal 2','Budi punya 72 kelereng. 25 diberikan ke adik. Berapa sisanya? Kata kunci "diberikan" dan "sisanya" = ➖. 72 − 25 = 47. Jawab: 47 kelereng.'],['Soal 3 (dua langkah)','Ada 40 permen. Dimakan 15, lalu dibeli 20 lagi. 40 − 15 = 25, lalu 25 + 20 = 45. Jawab: 45 permen.']],
+ er:['Baca soal dua kali sebelum menghitung.','Tulis satuan benda di jawaban.','Tanya diri: masuk akal tidak? Sisa tidak boleh lebih banyak dari jumlah awal.'],
+ sm:['Baca → Pilih operasi → Hitung → Jawab.','Kata kunci membantu memilih ➕ atau ➖.','Selalu tulis jawaban lengkap dengan bendanya.']}];
+const SL0=SL;SL=function(lv){const o=SL0(lv),x=X[lv-1],c=o.pop(),cd=(h,b)=>`<div class='rounded-2xl p-3 mb-2 bg-white/10 text-left'><b class='text-lg'>${h}</b><div class='font-bold'>${b}</div></div>`;
+ return [{t:'Misi',h:'🎯 Misi Belajar',b:()=>`<div class='text-left'><b>Setelah belajar ini, kamu bisa:</b><br>${LST(x.g)}<div class='mt-3 mb-1'><b>📖 Kata Ajaib</b></div>${x.v.map(a=>cd(a[0],a[1])).join('')}</div>`},o[0],{t:'Contoh',h:'📝 Contoh Bertahap',b:()=>x.ex.map(a=>cd(a[0],a[1])).join('')},...o.slice(1),{t:'Awas!',h:'⚠️ Hati-hati dan Cara Mengecek',b:()=>`<div class='text-left'>${LST(x.er)}</div>`},c,{t:'Rangkuman',h:'⭐ Rangkuman',b:()=>`<div class='text-left'>${LST(x.sm)}</div><div class='mt-4 text-center'><button class='gold' onclick='startQuiz(cur)'>⚔️ Siap Main Kuis!</button></div>`}]};
+pickAv('🤴');
+/* ===== ARENA PERMAINAN ===== */
+let VT=null;
+function vsStop(){clearInterval(VT)}
+function vsBar(){$('vBar0').style.width=V.T+'%';$('vBar1').style.width=(100-V.T)+'%'}
+function vsStreak(){[0,1].forEach(p=>$('c'+p).textContent='🔥'.repeat(Math.min(V.st[p],3)))}
+startVs=function(){vsStop();V={r:0,sc:[0,0],lk:[0,0],open:false,T:50,st:[0,0],tm:12};go('vs');$('v0').textContent=0;$('v1').textContent=0;$('c0').textContent='';$('c1').textContent='';vsBar();vsNext()};
+vsNext=function(){vsStop();if(V.r>=8||V.T<=0||V.T>=100)return vsEnd();V.r++;V.c=G([2,3,4,5,2,3,4,5][V.r-1]);V.lk=[0,0];V.open=true;V.tm=12;V.big=V.r%3==0;
+ $('vR').textContent='Ronde '+V.r+' dari 8'+(V.big?' · 💎 RONDE KRISTAL (poin ×2)':'');$('vQ').textContent=V.c.q;$('vF').textContent='Siapa cepat dan benar, dia menyerang! ⚡';$('vTm').style.width='100%';
+ [0,1].forEach(p=>$('p'+p).innerHTML=V.c.o.map(v=>`<button class='opt' onclick='vsA(${p},${v},this)'>${v}</button>`).join(''));
+ VT=setInterval(()=>{V.tm-=.1;$('vTm').style.width=Math.max(0,V.tm/12*100)+'%';if(V.tm<=0){vsStop();V.open=false;V.st=[0,0];vsStreak();sfx.bad();$('vF').textContent='⏰ Waktu habis! Jawaban: '+V.c.ans;setTimeout(vsNext,1500)}},100)};
+vsA=function(p,v,b){if(!V.open||V.lk[p])return;
+ if(v==V.c.ans){V.open=false;vsStop();V.st[p]++;V.st[1-p]=0;const pw=(V.big?2:1)*(V.st[p]>=2?2:1)*10;V.sc[p]++;V.T=Math.max(0,Math.min(100,V.T+(p?-pw:pw)));
+  b.classList.add('ok');$('v'+p).textContent=V.sc[p];vsStreak();vsBar();sfx.good();if(V.st[p]>=2)sfx.magic();
+  const op=$('p'+(1-p)).parentElement;op.classList.add('shk');setTimeout(()=>op.classList.remove('shk'),400);
+  $('vF').innerHTML=(p?'🔴 Kesatria Merah':'🔵 Kesatria Biru')+' menyerang! ⚔️ '+pw+' poin'+(V.st[p]>=2?' 🔥 COMBO!':'');setTimeout(vsNext,1400)}
+ else{V.lk[p]=1;V.st[p]=0;vsStreak();b.classList.add('no');sfx.bad();document.querySelectorAll('#p'+p+' .opt').forEach(x=>x.disabled=true);
+  if(V.lk[0]&&V.lk[1]){V.open=false;vsStop();$('vF').textContent='Dua-duanya salah! Jawaban: '+V.c.ans;setTimeout(vsNext,1500)}else $('vF').textContent=(p?'Merah':'Biru')+' salah dan terkunci di ronde ini!'}};
+vsEnd=function(){vsStop();sfx.win();const w=V.T>50?0:V.T<50?1:-1,ko=V.T<=0||V.T>=100;if(w>=0)$('c'+w).textContent='👑';S.score+=30;hud();
+ pop(`<div class='text-6xl bnc'>${w<0?'🤝':'👑'}</div><h3 class='text-2xl font-extrabold'>${w<0?'Seri! Kalian sama hebat!':(w?'Kesatria Merah':'Kesatria Biru')+(ko?' menang KO!':' menang!')}</h3><p class='font-bold'>Jawaban benar: Biru ${V.sc[0]} · Merah ${V.sc[1]}<br>Bonus +30 🪙</p>`);go('hub')};
+/* kartu memori */
+let Mem={};
+function startMemory(){go('mem');Mem={pairs:[],sel:null,matched:0,tries:0,lock:false};$('memMatch').textContent=0;$('memTries').textContent=0;$('memF').textContent='';
+ const raw=[],used=new Set();let i=0;while(i<4){const o=G(r(2,4));if(used.has(o.ans))continue;used.add(o.ans);raw.push({id:i,text:o.q.replace(' = ?',''),type:'q'},{id:i,text:o.ans,type:'a'});i++}
+ Mem.pairs=sh(raw);$('memGrid').innerHTML=Mem.pairs.map((c,x)=>`<button class='opt !text-2xl min-h-[90px]' onclick='memClick(this,${x})'>❓</button>`).join('')}
+function memClick(b,x){if(Mem.lock||b.classList.contains('ok')||(Mem.sel&&Mem.sel.btn==b))return;const c=Mem.pairs[x];b.textContent=c.text;sfx.click();
+ if(!Mem.sel){Mem.sel={c,btn:b};return}
+ const s=Mem.sel;Mem.tries++;$('memTries').textContent=Mem.tries;
+ if(s.c.id==c.id&&s.c.type!=c.type){sfx.good();b.classList.add('ok');s.btn.classList.add('ok');Mem.sel=null;Mem.matched++;$('memMatch').textContent=Mem.matched;
+  if(Mem.matched>=4){sfx.win();S.score+=40;hud();$('memF').textContent='🎉 Hebat! Semua pasangan cocok! +40 🪙'}}
+ else{sfx.bad();Mem.lock=true;b.classList.add('no');s.btn.classList.add('no');setTimeout(()=>{b.classList.remove('no');s.btn.classList.remove('no');b.textContent='❓';s.btn.textContent='❓';Mem.sel=null;Mem.lock=false},800)}}
+/* kuis tanpa nyawa: salah = soal diganti */
+startQuiz=function(lv){cur=lv;Q={lv,ok:0,bad:0,sc:0,hw:2,hs:2,lock:false,prev:''};go('quiz');$('bK').innerHTML='👑 Petunjuk Raja (<span id="nK">2</span>)';nextQ()};
+nextQ=function(){if(Q.ok>=TOT)return endQuiz(true);let c;do{c=G(Q.lv)}while(c.q==Q.prev);Q.c=c;Q.prev=c.q;Q.lock=false;
+ $('qH').textContent='⭐'.repeat(Q.ok)+'☆'.repeat(TOT-Q.ok);$('qP').textContent='Benar '+Q.ok+' dari '+TOT;$('qS').textContent=Q.sc;$('nW').textContent=Q.hw;$('nK').textContent=Q.hs;
+ $('bW').disabled=Q.hw<1;$('bK').disabled=Q.hs<1;$('qV').innerHTML=c.vis;$('qQ').textContent=c.q;$('qF').textContent='🧠 Hitung dulu di kepala, ya! Jawaban salah akan mengganti soal.';
+ $('qO').innerHTML=c.o.map(v=>`<button class='opt' data-v='${v}' onclick='ans(this)'>${v}</button>`).join('')};
+ans=function(b){if(Q.lock)return;Q.lock=true;const v=+b.dataset.v,all=[...document.querySelectorAll('#qO .opt')];all.forEach(x=>x.disabled=true);
+ if(v==Q.c.ans){b.classList.add('ok');sfx.good();Q.ok++;Q.sc+=10;S.score+=10;hud();$('qS').textContent=Q.sc;$('qH').textContent='⭐'.repeat(Q.ok)+'☆'.repeat(TOT-Q.ok);$('qP').textContent='Benar '+Q.ok+' dari '+TOT;$('qF').innerHTML='🎉 Selamat! Jawabanmu benar! +10 🪙';setTimeout(nextQ,1100)}
+ else{Q.bad++;b.classList.add('no','shk');sfx.bad();all.forEach(x=>{if(+x.dataset.v==Q.c.ans)x.classList.add('ok')});$('qF').innerHTML='💭 Belum tepat. Jawaban yang benar: <b>'+Q.c.ans+'</b>.<br><span class="text-base">'+(Q.c.tip||'Hitung balok puluhan dan satuan dengan teliti.')+' Ayo coba soal baru!</span>';setTimeout(nextQ,3200)}};
+shield=function(){if(Q.hs<1||Q.lock)return;Q.hs--;$('nK').textContent=Q.hs;$('bK').disabled=Q.hs<1;sfx.shield();$('qF').innerHTML='👑 Petunjuk Raja: '+(Q.c.tip||'Hitung balok puluhan 🟥 dan satuan 🟦 dengan teliti.')};
+endQuiz=function(){S.cry.add(Q.lv);S.unlocked=Math.max(S.unlocked,Math.min(5,Q.lv+1));sfx.win();hud();const all=S.cry.size>=5;
+ pop(`<div class='text-6xl bnc'>💎</div><h3 class='text-2xl font-extrabold'>Kristal ${Q.lv} didapat!</h3><p class='font-bold'>Skor kuis: ${Q.sc} 🪙 · Soal diganti karena salah: ${Q.bad} kali</p><p class='font-bold'>${all?'Semua kristal terkumpul! Ambil sertifikatmu!':Q.lv<5?'Wilayah berikutnya terbuka!':'Coba juga Arena Permainan!'}</p>`);go(all?'end':'map');if(all)fillEnd()};
+showGuide=function(){pop("<h3 class='text-2xl font-extrabold'>📖 Panduan Bermain</h3><ul class='text-left font-bold mt-2 list-disc pl-6'><li>Buka wilayah, klik Pelajari Materi dulu.</li><li>Di kuis, kamu harus menjawab 6 soal dengan benar. Tiap benar dapat 🪙 dan ⭐.</li><li>Kalau salah, soalnya langsung diganti. Jadi hitung dulu, jangan asal tebak!</li><li>🧙 Penyihir menyingkirkan 2 jawaban salah.</li><li>👑 Petunjuk Raja memberi petunjuk cara menghitung.</li><li>Selesaikan kuis untuk mendapat 💎 dan membuka wilayah baru.</li></ul>")};
+/* kartu pasangan terbuka */
+startMemory=function(){go('mem');Mem={sel:null,matched:0,tries:0,lock:false};$('memMatch').textContent=0;$('memTries').textContent=0;$('memF').textContent='Soal ada di kiri, jawaban di kanan. Hitung dulu, lalu pasangkan!';
+ const qs=[],used=new Set();let i=0;while(i<4){const o=G(r(2,4));if(used.has(o.ans))continue;used.add(o.ans);qs.push({id:i,q:o.q,a:o.ans});i++}
+ const an=sh(qs.map(x=>({id:x.id,t:x.a})));
+ $('memGrid').innerHTML=qs.map((x,k)=>`<button class='opt !text-2xl' style='background:linear-gradient(#fff6b0,#ffe066)' data-t='q' data-id='${x.id}' onclick='memClick(this)'>${x.q}</button><button class='opt !text-3xl' style='background:linear-gradient(#c8f7c5,#7bdc72)' data-t='a' data-id='${an[k].id}' onclick='memClick(this)'>${an[k].t}</button>`).join('')};
+memClick=function(b){if(Mem.lock||b.classList.contains('ok'))return;sfx.click();const s=Mem.sel;
+ if(!s||s.dataset.t==b.dataset.t){if(s)s.style.outline='';b.style.outline='5px solid #6d28d9';Mem.sel=b;return}
+ Mem.tries++;$('memTries').textContent=Mem.tries;s.style.outline='';Mem.sel=null;
+ if(s.dataset.id==b.dataset.id){sfx.good();[s,b].forEach(x=>{x.classList.add('ok');x.style.background='linear-gradient(#b8f7a0,#53c93b)';x.style.opacity='.75';x.disabled=true});Mem.matched++;$('memMatch').textContent=Mem.matched;$('memF').textContent='✅ Betul!';
+  if(Mem.matched>=4){sfx.win();S.score+=40;hud();$('memF').textContent='🎉 Hebat! Semua pasangan cocok! +40 🪙'}}
+ else{sfx.bad();Mem.lock=true;$('memF').textContent='💭 Belum cocok, hitung lagi ya!';[s,b].forEach(x=>{x.style.outline='5px solid #ef4444';x.classList.add('shk')});setTimeout(()=>{[s,b].forEach(x=>{x.style.outline='';x.classList.remove('shk')});Mem.lock=false},700)}};
+/* balapan kilat */
+let Race={timer:null};
+function stopRace(){clearInterval(Race.timer)}
+function startRace(){stopRace();go('race');Race={time:30,score:0,timer:null,cur:null,lock:false};$('raceTime').textContent=30;$('raceScore').textContent=0;nextRace();
+ Race.timer=setInterval(()=>{Race.time--;$('raceTime').textContent=Race.time;if(Race.time<=0){stopRace();sfx.win();S.score+=Race.score;hud();pop(`<div class='text-6xl bnc'>⏱️</div><h3 class='text-2xl font-extrabold'>Waktu habis!</h3><p class='font-bold'>Kamu mengumpulkan <b>${Race.score} 🪙</b> dalam 30 detik!</p>`);go('hub')}},1000)}
+function nextRace(){Race.cur=G(r(1,4));$('raceQ').textContent=Race.cur.q;$('raceO').innerHTML=Race.cur.o.map(v=>`<button class='opt' onclick='ansRace(this,${v})'>${v}</button>`).join('')}
+function ansRace(b,v){if(Race.lock)return;if(v==Race.cur.ans){sfx.good();Race.score+=10;$('raceScore').textContent=Race.score;b.classList.add('ok');Race.lock=true;setTimeout(()=>{Race.lock=false;nextRace()},250)}else{sfx.bad();b.classList.add('no');Race.lock=true;setTimeout(()=>{b.classList.remove('no');Race.lock=false},300)}}
+/* daftar slide */
+const P=t=>`<p class="font-bold text-lg mb-2">${t}</p>`,LST=a=>'<ol class="text-left font-bold list-decimal pl-8 mt-2 inline-block">'+a.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
+function SL(lv){const ch={t:'Tantangan',h:'⚡ Tantangan Kilat',b:chal};return [
+ [{t:'Kenali',h:'🌳 Puluhan dan Satuan',b:()=>P('Di Hutan Angka, 10 buah 🟦 diikat jadi 1 batang 🟥. Batang disebut <b>puluhan</b>. Buah lepas disebut <b>satuan</b>.')+tenTo()+'<input type="range" min="0" max="99" value="46" class="w-64" oninput="sl2(this.value)"><div id="dm"></div>',i:()=>sl2(46)},
+  {t:'Kalkulator',h:'🧮 Kalkulator Balok Ajaib',b:()=>P('Tekan tombol. Coba tekan +1 satuan sampai 10 dan lihat keajaiban!')+counter('a'),i:()=>paintCt('a')},
+  {t:'Bentuk Angka',h:'🎯 Bentuk Angka Target',b:()=>{const g=r(11,99);return P(`Susun angka <b class="text-4xl">${g}</b> memakai balok!`)+counter('b',g)+'<button class="gold mt-3" onclick="chkT()">Cek ✔</button><div id="tg" class="font-bold mt-2 text-lg"></div>'},i:()=>paintCt('b')},ch],
+ [{t:'Kenali',h:'🌉 Aturan Menyimpan',b:()=>P('Jembatan hanya kuat menahan 9 satuan. Kalau satuan jadi 10, tukar dengan 1 puluhan lalu <b>simpan</b> ke kiri!')+tenTo()+LST(['Jumlahkan <b>satuan</b> dulu.','Satuan 10 atau lebih? Simpan 1 puluhan.','Jumlahkan <b>puluhan</b> plus simpanan.'])},
+  {t:'Kalkulator',h:'🧮 Kalkulator Penjumlahan Menyimpan',b:()=>P('Ketik dua angka atau tekan Acak. Lalu lihat langkahnya satu per satu.')+colcalc('+'),i:()=>cStart('+')},ch],
+ [{t:'Kenali',h:'⛰️ Aturan Meminjam',b:()=>P('Di gua gelap, satuan atas kadang kurang. Pinjam 1 puluhan 🟥, ubah jadi 10 satuan 🟦!')+'<div class="my-2"><span class="bt"></span> <b class="text-2xl">=</b> '+'<span class="bo"></span>'.repeat(10)+'</div>'+LST(['Satuan atas lebih kecil? <b>Pinjam</b> 1 puluhan.','Satuan atas jadi tambah 10, lalu dikurangi.','Puluhan atas jadi berkurang 1, lalu dikurangi.'])},
+  {t:'Kalkulator',h:'🧮 Kalkulator Pengurangan Meminjam',b:()=>P('Angka pertama harus lebih besar. Tekan Acak untuk soal meminjam!')+colcalc('−'),i:()=>cStart('−')},ch],
+ [{t:'Kenali',h:'🔮 Rahasia Penyihir',b:()=>P('Menambah 10 itu mudah, hanya puluhan yang naik 1! Penyihir memakai itu untuk menambah 9, 8, atau 11.')+LST(['9 = 10 − 1, jadi tambah 10 lalu kurangi 1.','8 = 10 − 2, jadi tambah 10 lalu kurangi 2.','Mengurangi 9: kurangi 10 lalu tambah 1.'])},
+  {t:'Kalkulator',h:'🧙 Kalkulator Trik Kilat',b:()=>P('Pilih angka dan trik. Lihat lompatan sihirnya!')+trickUI(),i:()=>tRun('+9')},ch],
+ [{t:'Kenali',h:'🏰 Empat Langkah Soal Cerita',b:()=>P('Pahlawan membaca cerita dengan teliti.')+LST(['<b>Baca</b> soal dan cari angkanya.','<b>Pilih</b> operasi dari kata kunci.','<b>Hitung</b> dengan cara yang sudah dipelajari.','<b>Jawab</b> lengkap dengan bendanya.'])+'<div class="grid grid-cols-2 gap-3 mt-3 font-bold"><div class="rounded-2xl bg-green-200 p-2">➕ dapat lagi, digabung, semuanya</div><div class="rounded-2xl bg-red-200 p-2">➖ diberikan, dimakan, sisanya</div></div>'},
+  {t:'Kalkulator',h:'🧮 Kalkulator Soal Cerita',b:()=>P('Susun ceritamu sendiri, lalu lihat jawabannya!')+storyUI(),i:()=>stRun()},ch]][lv-1]}
+</script>
+</body>
+</html>
